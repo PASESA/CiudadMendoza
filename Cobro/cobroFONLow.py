@@ -289,73 +289,44 @@ class FormularioOperacion:
         for fila in respuesta:
             self.scrolledtxt.insert(tk.END, "Folio num: "+str(fila[0])+"\nEntro: "+str(fila[1])+"\nPlacas: "+str(fila[2])+"\n\n")
     def BoletoPerdido(self):
-       datos=str(self.PonerFOLIO.get(), )
-       datos=int(datos)
-       datos=str(datos)
-       self.folio.set(datos)
-       datos=(self.folio.get(), )
-       respuesta=self.operacion1.consulta(datos)
-       if len(respuesta)>0:
-           self.descripcion.set(respuesta[0][0])
-           self.precio.set(respuesta[0][1])
-           self.CalculaPermanencia()#nos vamos a la funcion de calcular permanencia
-           fecha = datetime.today()
-           fecha1= fecha.strftime("%Y-%m-%d %H:%M:%S")
-           fechaActual= datetime.strptime(fecha1, '%Y-%m-%d %H:%M:%S')
-           date_time_str=str(self.descripcion.get())
-           date_time_obj= datetime.strptime(date_time_str, '%Y-%m-%d %H:%M:%S')
-           date_time_mod = datetime.strftime(date_time_obj, '%Y/%m/%d/%H/%M/%S')
-           date_time_mod2 = datetime.strptime(date_time_mod, '%Y/%m/%d/%H/%M/%S')
-           ffeecha = fechaActual - date_time_mod2
-           #self.label11.configure(text=(ffeecha.days, "dias"))
-           segundos_vividos = ffeecha.seconds
-           horas_dentro, segundos_vividos = divmod(segundos_vividos, 3600)
-           #self.label12.configure(text=(horas_dentro, "horas"))
-           minutos_dentro, segundos_vividos = divmod(segundos_vividos, 60)
-           if horas_dentro <= 24:
-                importe = 200+((ffeecha.days)*720 + (horas_dentro * 30))
-                #importe = 200
-           if horas_dentro > 24 or ffeecha.days >= 1:
-                importe = 200+((ffeecha.days)*720 + (horas_dentro * 30))
-           self.importe.set(importe)
-           self.label9.configure(text =(importe, "cobro"))
-           self.PrTi.set("Per")
-           self.Comprobante()
-           #p = Usb(0x04b8, 0x0202, 0)
-           p = Usb(0x04b8, 0x0e28, 0)#esta es la impresora con sus valores que se obtienen con lsusb
-           p.text('Boleto Perdido\n')
-           FoliodelPerdido = str(self.PonerFOLIO.get(),)
-           p.text('Folio boleto cancelado: '+FoliodelPerdido+'\n')
-           fecha = datetime.today()
-           fechaNota = datetime.today()
-           fechaNota= fechaNota.strftime("%b-%d-%A-%Y %H:%M:%S")
-           horaNota = str(fechaNota)
-           p.set(align="left")
-           p.set('Big line\n', font='b')
-           p.text('Fecha: '+horaNota+'\n')
-           EntradaCompro = str(self.descripcion.get(),)
-           p.text('El auto entro: '+EntradaCompro+'\n')
-           SalioCompro = str(self.copia.get(),)
-           p.text('El auto salio: '+SalioCompro+'\n')
-           self.GuardarCobro()
-           self.PonerFOLIO.set("")
-           p.cut()
-           self.promo.set("")
-           self.PonerFOLIO.set("")
-       else:
-           self.descripcion.set('')
-           self.precio.set('')
-           mb.showinfo("Información", "No existe un auto con dicho código")
+        datos=str(self.PonerFOLIO.get())
+        
+        self.folio.set(datos)
+        if len(datos) > 0:
+            respuesta=self.operacion1.consulta(datos)
+            if len(respuesta)>0:
+                self.descripcion.set(respuesta[0][0])
+                self.precio.set(respuesta[0][1])
+
+                self.CalculaPermanencia()#nos vamos a la funcion de calcular permanencia
+
+                importe = 200
+
+                self.importe.set(importe)
+                self.label9.configure(text =(importe, "Cobrar"))
+
+                self.PrTi.set("Per")
+
+            else:
+                self.descripcion.set('')
+                self.precio.set('')
+                mb.showinfo("Información", "No existe un auto con dicho código")
+        else:
+            mb.showinfo("Error", "Ingrese el folio del boleto perdido")
+            self.folio.set("")
+            self.entryfolio.focus()
+        self.PonerFOLIO.set("")
+
     def consultar(self,event):
         datos=str(self.folio.get(), )
         print(datos)
         if len(datos) > 20:#con esto revisamos si lee el folio o la promocion
             datos=datos[26:]
-            print("datos 1", datos)
+
             global AutoPago
             AutoPago = datos
             #mb.showwarning("important", AutoPago)
-            print("AutoPago Cons", AutoPago)            
+
             datos=int(datos)
             datos=str(datos)
             self.folio.set(datos)
@@ -488,7 +459,7 @@ class FormularioOperacion:
         EntradaCompro = str(self.descripcion.get(),)
         folioactual=str(self.folio.get(), )
         SalioCompro = str(self.copia.get(),)
-        imgqr = (SalioCompro + str(AutoPago))
+        imgqr = (SalioCompro + folioactual)
         img = qrcode.make(imgqr)
         #img = qrcode.make(EntradaCompro + SalioCompro)
         # Obtener imagen con el tamaño indicado
@@ -2381,6 +2352,7 @@ class FormularioOperacion:
             mb.showinfo("Error", "Ingrese el folio del boleto dañado")
             self.folio.set("")
             self.entryfolio.focus()
+        self.PonerFOLIO.set("")
             
             
     def imprimir_comprobante_pago_pensionado(self,
