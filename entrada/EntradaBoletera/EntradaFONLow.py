@@ -226,22 +226,15 @@ class FormularioOperacion:
                 self.entryNumTarjeta4.focus()
                
         if (BanBoton == 0):#BanBoton == 1 no esta oprimido el boton
-            self.BotDet.config(text = ".", font=('Arial', 15), background='#CCC') #'#CCC'
+            self.BotDet.config(text = "solto Boton ",background="#CCC")
             #print(str(BanSenBoleto))
-            if BanImpresion == 1 and BanSenBoleto == 0:# mando a imprimir y ya no tiene boleto en la boquilla
-                self.SenBol.config(text = "AVANCE", font=('Arial', 15), background= "green") #'#CCC'
-                self.SenBol2.config(text = ".", font=('Arial', 15), background='#CCC') #Se desactiva Sensor Boleto y abre barrera  
-                print("En BanSenBoleto="+str(BanSenBoleto))
-                #io.output(out3,1)#con un "1" se apaga el led
-                io.output(barrera,1)#con un "0" abre la barrera
-                time.sleep (1)
-                io.output(barrera,0)
-                BanImpresion = 0
-                
-                print('mando abrir barrera')
+            if BanImpresion == 1: #and BanSenBoleto == 1:# mando a imprimir y ya no tiene boleto en la boquilla
+                self.SenBol.config(text = "No siente boleto ")
+                #print("En BanBoton= 1 "+str(BanSenBoleto))
+
                                     #io.output(out2,1)
         else:    
-                self.SenBol.config(text = "TOMAR BOLETO ", font=('Arial', 15), background="green")
+                self.BotDet.config(text = "presiono Boton imprime ",background="green")
                 print("BanSenBoleto ",str(BanSenBoleto))
                 print("BanImpresion ",str(BanImpresion))
                 print("BamLoop ",str(BanLoop))
@@ -250,9 +243,13 @@ class FormularioOperacion:
                    print('imprimir')
                    #print(str(BanSenBoleto))
                    self.agregarRegistroRFID()
+                   io.output(out3,1)#con un "1" se apaga el led
+                   io.output(barrera,0)#con un "0" abre la barrera
+                   time.sleep (1)
+                   io.output(barrera,1)
+                   #BanImpresion = 0
                    BanImpresion = 1
                    if BanSenBoleto == 1:
-                      self.SenBol2.config(text = "Sensor Boleto", font=('Arial', 15), background="green") ##Se activa Sensor Boleto   
                       print("En BanSenBoleto= 1 "+str(BanSenBoleto))
                       # self.SenBol.config(text = "No siente boleto ")
                       # io.output(out3,1)#con un "1" se apaga el led
@@ -260,15 +257,12 @@ class FormularioOperacion:
                        #time.sleep (1)
                        #io.output(barrera,1)
                    else:                   
-                      self.SenBol.config(text = ".", font=('Arial', 15), background='#CCC')
-                
+                      self.SenBol.config(text = "siente boleto ")
+                    
                 else:
-                   print ('no puede imprimir ')
+                   print ('no puede imprimir porque no tiene Auto')
                    #print(str(BanSenBoleto))
-                   if BanLoop == 1:
-                        self.BotDet.config(text = "Boleto Impreso",background="orange")
-                   else:
-                        self.BotDet.config(text = "No hay Auto",background="orange")
+                   self.BotDet.config(text = "no puede imprimir no hay auto ",background="red")
 
         now =datetime.now() 
         fecha1= now.strftime("%d-%b-%y")
