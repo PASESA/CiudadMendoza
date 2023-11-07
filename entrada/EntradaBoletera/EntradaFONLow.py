@@ -274,7 +274,8 @@ class FormularioOperacion:
                    print ('no puede imprimir ')
                    #print(str(BanSenBoleto))
                    if BanLoop == 1:
-                        self.BotDet.config(text = "Boleto Impreso",background="orange")
+                        pass
+                        # self.BotDet.config(text = "Boleto Impreso",background="orange")
                    else:
                         self.BotDet.config(text = "No hay Auto",background="orange")
 
