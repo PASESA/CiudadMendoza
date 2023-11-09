@@ -28,10 +28,6 @@ io.setwarnings(False)           # no señala advertencias de pin ya usados
 io.setup(barrera,io.OUT)           # configura en el micro las salidas
 io.output(barrera,1)
 TipoPromocion = 1
-
-from view_login import View_Login
-
-
 class FormularioOperacion:
     def __init__(self):
         #creamos un objeto que esta en el archivo operacion dentro la clase Operacion
@@ -263,11 +259,11 @@ class FormularioOperacion:
         #botones
         #self.boton1=tk.Button(self.labelframe2, text="Consultar", command=self.consultar, width=20, height=5, anchor="center")
         #self.boton1.grid(column=1, row=4)
-        self.boton2=tk.Button(self.labelpromo, text="Cliente OficeMax", command=self.CalculaPromocion, width=12, height=3, anchor="center")
+        self.boton2=tk.Button(self.labelpromo, text="Cliente OficeMax", command=self.CalculaPromocion, width=12, height=3, anchor="center", state = "disabled")
         self.boton2.grid(column=1, row=4)
-        self.btnTezo=tk.Button(self.labelpromo, text="Valet Durango", command=self.CalculaPromocionTezo, width=12, height=3, anchor="center")
+        self.btnTezo=tk.Button(self.labelpromo, text="Valet Durango", command=self.CalculaPromocionTezo, width=12, height=3, anchor="center", state = "disabled")
         self.btnTezo.grid(column=1, row=5)
-        self.btnTezo=tk.Button(self.labelpromo, text="Net Works", command=self.CalculaPromocionTezoEvento, width=12, height=3, anchor="center")
+        self.btnTezo=tk.Button(self.labelpromo, text="Net Works", command=self.CalculaPromocionTezoEvento, width=12, height=3, anchor="center", state = "disabled")
         self.btnTezo.grid(column=0, row=4)                   
         #self.boton3=tk.Button(self.pagina2, text="COBRAR ", command=self.GuardarCobro, width=20, height=5, anchor="center", background="Cadetblue")
         #self.boton3.grid(column=1, row=1)
@@ -877,19 +873,7 @@ class FormularioOperacion:
         self.entryClave2.grid(column=1, row=5)
         self.boton6=tk.Button(self.labelframe5, text="Reporte de Corte", command=self.Reporte_Corte, width=15, height=1, anchor="center", background="red")
         self.boton6.grid(column=3, row=5, padx=4, pady=4)        
-
-        self.seccion_boton_usuario = ttk.LabelFrame(self.pagina3, text='Administrar usuarios')
-        self.seccion_boton_usuario.grid(row=3, column=1, padx=10, pady=10)
-
-        self.boton_usuarios=tk.Button(self.seccion_boton_usuario, text="Entrar",	 
-        command=lambda:{
-                self.desactivar(),
-                View_Login(),
-                self.activar()
-                },
-        width=15, height=1, anchor="center", background="red")
-        self.boton_usuarios.grid(column=0, row=0, padx=4, pady=4)  
-
+               
     def BoletoDentro2(self):
         respuesta=self.operacion1.Autos_dentro()
         self.scrolledtxt2.delete("1.0", tk.END)
@@ -899,9 +883,7 @@ class FormularioOperacion:
         Numcorte=str(self.CortesAnteri.get(), )
         Numcorte=int(Numcorte)
         Numcorte=str(Numcorte)
-        io.output(out1,0)
-        time.sleep(1)
-        io.output(out1,1)
+
         respuesta=self.operacion1.desglose_cobrados(Numcorte)
         self.scrolledtxt2.delete("1.0", tk.END)
         #p = Usb(0x04b8, 0x0202, 0)
@@ -2459,33 +2441,6 @@ class FormularioOperacion:
         # Establece las variables de tipo de pago como False
         self.variable_tipo_pago_transferencia.set(False)
         self.variable_tipo_pago_efectivo.set(False)
-
-
-    def desactivar(self):
-        """
-        Desactiva los botones de la interface
-    
-        :param None: 
-
-        :raises None: 
-
-        :return:
-            - None
-        """
-        self.ventana1.withdraw()  # oculta la ventana
-
-    def activar(self):
-        """
-        Activa los botones de la interface
-
-        :param None: 
-
-        :raises None: 
-
-        :return:
-            - None
-        """
-        self.ventana1.deiconify()
-
-
-#aplicacion1=FormularioOperacion()
+            
+            
+# aplicacion1=FormularioOperacion()
