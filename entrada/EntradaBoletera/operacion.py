@@ -5,21 +5,18 @@ from tkinter import messagebox as mb
 
 
 class Operacion:
+    def __init__(self):
+        self.host = "169.254.70.94"
+        self.user = "Aurelio"
+        self.password = "RG980320"
+        self.database = "Parqueadero1"
 
     def abrir(self):
-        #conexion=mysql.connector.connect(host="localhost",
-         #                                     user="root",
-          #                                    passwd="RG980320",
-           #                                   database="Parqueadero1")
-#        conexion = pymysql.connect(host="localhost",
-#                        user="Aurelio",
-#                           passwd="RG980320",
-#                           database="Parqueadero1")
-        conexion = pymysql.connect(host="169.254.70.94",
-        #conexion = pymysql.connect(host="169.254.90.70",
-                           user="Aurelio",
-                           passwd="RG980320",
-                           database="Parqueadero1") #host="192.168.1.150"                           
+        conexion=pymysql.connect(host=self.host,
+                                 user=self.user,
+                                 passwd=self.password,
+                                 database=self.database)
+                        
         return conexion
         
     def Intervalo(self):
