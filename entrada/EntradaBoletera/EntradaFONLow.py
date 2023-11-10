@@ -48,7 +48,7 @@ io.setup(out1,io.OUT)           # configura en el micro las salidas
 io.setup(out2,io.OUT)
 io.setup(out3,io.OUT)  
 line=''
-io.output(barrera,0)
+io.output(barrera,1)
 io.output(out1,0)
 io.output(out2,0)
 io.output(out3,0)
@@ -184,13 +184,13 @@ class FormularioOperacion:
         global BanLoop
         if io.input(loop):
                 print('hay auto') 
-                io.output(out1,1)#con un "1" se apaga el led
+                io.output(out1,0)#con un "1" se apaga el led
                 #self.loopDet.config(text = "Inicio", background = '#CCC')                
                 BanLoop = 1
                 #self.check_inputs()
         else:                
                 #print('No hay auto') 
-                io.output(out1,0)                              
+                io.output(out1,1)                              
                 #self.loopDet.config(text = "Auto", background = 'red')
                 BanLoop = 0
                 #self.check_inputs()
@@ -199,11 +199,11 @@ class FormularioOperacion:
         if io.input(boton):
                         #self.BotDet.config(text = "Presione Boton",background="#CCC")
                         print('Presiono boton')
-                        io.output(out2,1)
+                        io.output(out2,0)
                         BanBoton = 1
         else:
                         #print('Solto boton')            
-                        io.output(out2,0)
+                        io.output(out2,1)
                         #self.BotDet.config(text = "Imprimiendo",background="red")
                         BanBoton = 0
                         #self.agregarRegistroRFID()
@@ -241,9 +241,9 @@ class FormularioOperacion:
                 self.SenBol2.config(text = ".", font=('Arial', 15), background='#CCC') #Se desactiva Sensor Boleto y abre barrera  
                 # print("En BanSenBoleto="+str(BanSenBoleto))
                 #io.output(out3,1)#con un "1" se apaga el led
-                io.output(barrera,1)#con un "0" abre la barrera
+                io.output(barrera,0)#con un "0" abre la barrera
                 time.sleep (1)
-                io.output(barrera,0)
+                io.output(barrera,1)
                 BanImpresion = 0
                 
                 print('mando abrir barrera')
@@ -346,7 +346,8 @@ class FormularioOperacion:
         
         
         #p = Usb(0x04b8, 0x0202, 0)#0202 04b8:
-        p = Usb(0x04b8, 0x0e28, 0)
+        #p = Usb(0x04b8, 0x0e28, 0)
+        p = Usb(0x04b8, 0x0e15, 0)
         #p = Usb(0x04b8, 0x0e28, 0)#esta es la impresora con sus valores que se obtienen con lsusb
         #p.set("center")
         #p.text("BOLETO DE ENTRADA\n")
@@ -431,9 +432,9 @@ class FormularioOperacion:
                     self.NumTarjeta4.set("")               
                     self.entryNumTarjeta4.focus()
                     #io.output(out3,1)#con un "1" se apaga el led
-                    io.output(barrera,1)#con un "0" abre la barrera
+                    io.output(barrera,0)#con un "0" abre la barrera
                     time.sleep (1)
-                    io.output(barrera,0)
+                    io.output(barrera,1)
                     #io.output(out3,1)#con un "1" se apaga el led
                     self.NumTarjeta4.set("")               
                     self.entryNumTarjeta4.focus()
@@ -596,7 +597,8 @@ class FormularioOperacion:
            self.PrTi.set("Per")
            self.Comprobante()
            #p = Usb(0x04b8, 0x0202, 0)
-           p = Usb(0x04b8, 0x0e28, 0)#esta es la impresora con sus valores que se obtienen con lsusb
+           #p = Usb(0x04b8, 0x0e28, 0)#esta es la impresora con sus valores que se obtienen con lsusb
+           p = Usb(0x04b8, 0x0e15, 0)
            p.text('Boleto Perdido\n')
            FoliodelPerdido = str(self.PonerFOLIO.get(),)
            p.text('Folio boleto cancelado: '+FoliodelPerdido+'\n')
@@ -867,7 +869,8 @@ class FormularioOperacion:
 
     def Comprobante(self):
         #p = Usb(0x04b8, 0x0202, 0)
-        p = Usb(0x04b8, 0x0e28, 0)#esta es la impresora con sus valores que se obtienen con lsusb
+        p = Usb(0x04b8, 0x0e15, 0)
+        #p = Usb(0x04b8, 0x0e28, 0)#esta es la impresora con sus valores que se obtienen con lsusb
         p.text("Comprobante de pago\n")
         p.image("LOGODIR4.jpg")
         #Compro de comprobante
@@ -1202,7 +1205,8 @@ class FormularioOperacion:
         respuesta=self.operacion1.desglose_cobrados(Numcorte)
         self.scrolledtxt2.delete("1.0", tk.END)
         #p = Usb(0x04b8, 0x0202, 0)
-        p = Usb(0x04b8, 0x0e28, 0)#esta es la impresora con sus valores que se obtienen con lsusb
+        #p = Usb(0x04b8, 0x0e28, 0)#esta es la impresora con sus valores que se obtienen con lsusb
+        p = Usb(0x04b8, 0x0e15, 0)
         p.text("El Numero de corte es "+Numcorte+'\n')
         for fila in respuesta:
             self.scrolledtxt2.insert(tk.END, "cobro: "+str(fila[0])+"\nImporte: $"+str(fila[1])+"\nCuantos: "+str(fila[2])+"\n\n")
@@ -1250,7 +1254,8 @@ class FormularioOperacion:
            self.PrTi.set("CDO")
            self.promo.set("")
            #p = Usb(0x04b8, 0x0202, 0)
-           p = Usb(0x04b8, 0x0e28, 0)#esta es la impresora con sus valores que se obtienen con lsusb
+           #p = Usb(0x04b8, 0x0e28, 0)#esta es la impresora con sus valores que se obtienen con lsusb
+           p = Usb(0x04b8, 0x0e15, 0)
            p.text('Boleto Cancelado\n')
            FoliodelCancelado = str(self.FolioCancelado.get(),)
            p.text('Folio boleto cancelado: '+FoliodelCancelado+'\n')
@@ -1285,7 +1290,8 @@ class FormularioOperacion:
         for fila in respuesta:
             self.scrolledtext1.insert(tk.END, "Entrada num: "+str(fila[0])+"\nEntro: "+str(fila[1])+"\nSalio: "+str(fila[2])+"\nImporte: "+str(fila[3])+"\n\n")
             #p = Usb(0x04b8, 0x0202, 0)
-            p = Usb(0x04b8, 0x0e28, 0)#esta es la impresora con sus valores que se obtienen con lsusb
+            #p = Usb(0x04b8, 0x0e28, 0)#esta es la impresora con sus valores que se obtienen con lsusb
+            p = Usb(0x04b8, 0x0e15, 0)
             p.text('Entrada Num :')
             p.text(str(fila[0]))
             p.text('\n')
@@ -1356,7 +1362,8 @@ class FormularioOperacion:
         ActEntradas = (maxnum, vobo )
         self.label4.configure(text=("Numero de corte",maxnum))
         #p = Usb(0x04b8, 0x0202, 0)
-        p = Usb(0x04b8, 0x0e28, 0)#esta es la impresora con sus valores que se obtienen con lsusb
+        #p = Usb(0x04b8, 0x0e28, 0)#esta es la impresora con sus valores que se obtienen con lsusb
+        p = Usb(0x04b8, 0x0e15, 0)
         p.text("CORTE Num "+maxnum+"\n")
         p.text('IMPORTE: $ '+Im38+'\n')
         ultiCort1=str(self.FechUCORTE.get(),)
