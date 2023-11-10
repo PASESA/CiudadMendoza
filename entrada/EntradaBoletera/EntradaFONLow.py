@@ -1,24 +1,13 @@
-#programa de entrada en tenayuca 
-from datetime import datetime, date, time, timedelta
+from datetime import datetime, time, timedelta
 formato = "%H:%M:%S"
 from escpos.printer import *
 import qrcode
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox as mb
-from tkinter import scrolledtext as st
-from tkinter import font 
-#from tkinter import label
-# para impresion con  custom
-import os
-#import cups
-#import time, pprint, cups
-#from reportlab.lib.pagesizes import letter
-#from reportlab.pdfgen import canvas
-import re
+
 import operacion
 import time
-import serial
 
 # libreria de I/O (entradas / salidas)
 import RPi.GPIO as io
@@ -164,30 +153,31 @@ class FormularioOperacion:
     def Intloop(self): #Detecta presencia de automovil
         global BanLoop
         if io.input(loop):
-                print('hay auto') 
-                io.output(out1,0)#con un "1" se apaga el led
-                #self.loopDet.config(text = "Inicio", background = '#CCC')                
-                BanLoop = 1
-                #self.check_inputs()
-        else:                
-                #print('No hay auto') 
-                io.output(out1,1)                              
-                #self.loopDet.config(text = "Auto", background = 'red')
-                BanLoop = 0
-                #self.check_inputs()
+            print('hay auto') 
+            io.output(out1,0)#con un "1" se apaga el led
+            #self.loopDet.config(text = "Inicio", background = '#CCC')                
+            BanLoop = 1
+            #self.check_inputs()
+        else:
+            #print('No hay auto') 
+            io.output(out1,1)                              
+            #self.loopDet.config(text = "Auto", background = 'red')
+            BanLoop = 0
+            #self.check_inputs()
     def IntBoton(self): #Detecta presencia de automovil
         global BanBoton
         if io.input(boton):
-                        #self.BotDet.config(text = "Presione Boton",background="#CCC")
-                        print('Presiono boton')
-                        io.output(out2,0)
-                        BanBoton = 1
+            #self.BotDet.config(text = "Presione Boton",background="#CCC")
+            print('Presiono boton')
+            io.output(out2,0)
+            BanBoton = 1
         else:
-                        #print('Solto boton')            
-                        io.output(out2,1)
-                        #self.BotDet.config(text = "Imprimiendo",background="red")
-                        BanBoton = 0
-                        #self.agregarRegistroRFID()
+            #print('Solto boton')            
+            io.output(out2,1)
+            #self.BotDet.config(text = "Imprimiendo",background="red")
+            BanBoton = 0
+            #self.agregarRegistroRFID()
+
     io.add_event_detect(loop, io.BOTH, callback = Intloop)
  
     io.add_event_detect(boton, io.BOTH, callback = IntBoton)
@@ -201,18 +191,18 @@ class FormularioOperacion:
         global BanImpresion
     
         if BanLoop == 1:
-                self.loopDet.config(text = "OPRIMA BOTON", font=('Arial', 15), background = 'green')
-                tarjeta=str(self.entryNumTarjeta4.get(),)
-                if len(tarjeta) == 10:
-                    #mb.showwarning("IMPORTANTE", "ENTRO")
-                    self.Pensionados(self)
+            self.loopDet.config(text = "OPRIMA BOTON", font=('Arial', 15), background = 'green')
+            tarjeta=str(self.entryNumTarjeta4.get(),)
+            if len(tarjeta) == 10:
+                #mb.showwarning("IMPORTANTE", "ENTRO")
+                self.Pensionados(self)
         else:
-                self.loopDet.config(text = ".", font=('Arial', 15), background = '#CCC') #'#CCC'
-                self.SenBol2.config(text = ".", font=('Arial', 15), background='#CCC')
-                self.SenBol.config(text = ".", font=('Arial', 15), background='#CCC')
-                self.labelMensaje.config(text= "Sin Tarjeta para acceder")
-                self.NumTarjeta4.set("")               
-                self.entryNumTarjeta4.focus()
+            self.loopDet.config(text = ".", font=('Arial', 15), background = '#CCC') #'#CCC'
+            self.SenBol2.config(text = ".", font=('Arial', 15), background='#CCC')
+            self.SenBol.config(text = ".", font=('Arial', 15), background='#CCC')
+            self.labelMensaje.config(text= "Sin Tarjeta para acceder")
+            self.NumTarjeta4.set("")               
+            self.entryNumTarjeta4.focus()
                
         if (BanBoton == 0):#BanBoton == 1 no esta oprimido el boton
             self.BotDet.config(text = ".", font=('Arial', 15), background='#CCC') #'#CCC'
@@ -230,35 +220,35 @@ class FormularioOperacion:
                 print('mando abrir barrera')
                                     #io.output(out2,1)
         else:    
-                self.SenBol.config(text = "TOMAR BOLETO ", font=('Arial', 15), background="green")
-                # print("BanSenBoleto ",str(BanSenBoleto))
-                print("BanImpresion ",str(BanImpresion))
-                print("BamLoop ",str(BanLoop))
-                if BanLoop==1 and BanImpresion == 0:
-                    #io.output(out2,0)             
-                   print('imprimir')
-                   #print(str(BanSenBoleto))
-                   self.agregarRegistroRFID()
-                   BanImpresion = 1
-                #    if BanSenBoleto == 1:
-                #       self.SenBol2.config(text = "Sensor Boleto", font=('Arial', 15), background="green") ##Se activa Sensor Boleto   
-                #       print("En BanSenBoleto= 1 "+str(BanSenBoleto))
-                #       # self.SenBol.config(text = "No siente boleto ")
-                #       # io.output(out3,1)#con un "1" se apaga el led
-                #        #io.output(barrera,0)#con un "0" abre la barrera
-                #        #time.sleep (1)
-                #        #io.output(barrera,1)
-                #    else:                   
-                #       self.SenBol.config(text = ".", font=('Arial', 15), background='#CCC')
-                
+            self.SenBol.config(text = "TOMAR BOLETO ", font=('Arial', 15), background="green")
+            # print("BanSenBoleto ",str(BanSenBoleto))
+            print("BanImpresion ",str(BanImpresion))
+            print("BamLoop ",str(BanLoop))
+            if BanLoop==1 and BanImpresion == 0:
+                #io.output(out2,0)             
+                print('imprimir')
+                #print(str(BanSenBoleto))
+                self.agregarRegistroRFID()
+                BanImpresion = 1
+            #    if BanSenBoleto == 1:
+            #       self.SenBol2.config(text = "Sensor Boleto", font=('Arial', 15), background="green") ##Se activa Sensor Boleto   
+            #       print("En BanSenBoleto= 1 "+str(BanSenBoleto))
+            #       # self.SenBol.config(text = "No siente boleto ")
+            #       # io.output(out3,1)#con un "1" se apaga el led
+            #        #io.output(barrera,0)#con un "0" abre la barrera
+            #        #time.sleep (1)
+            #        #io.output(barrera,1)
+            #    else:                   
+            #       self.SenBol.config(text = ".", font=('Arial', 15), background='#CCC')
+            
+            else:
+                print ('no puede imprimir ')
+                #print(str(BanSenBoleto))
+                if BanLoop == 1:
+                    pass
+                    # self.BotDet.config(text = "Boleto Impreso",background="orange")
                 else:
-                   print ('no puede imprimir ')
-                   #print(str(BanSenBoleto))
-                   if BanLoop == 1:
-                        pass
-                        # self.BotDet.config(text = "Boleto Impreso",background="orange")
-                   else:
-                        self.BotDet.config(text = "No hay Auto",background="orange")
+                    self.BotDet.config(text = "No hay Auto",background="orange")
 
         now =datetime.now() 
         fecha1= now.strftime("%d-%b-%y")
