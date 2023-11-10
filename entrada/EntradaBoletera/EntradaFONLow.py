@@ -154,9 +154,7 @@ class FormularioOperacion:
 
 
     def check_inputs(self):
-        global BanBoton
-        global BanLoop
-        global BanImpresion
+        global BanBoton, BanLoop, BanImpresion
     
         if BanLoop == 1:
             self.loopDet.config(text = "OPRIMA BOTON", font=('Arial', 15), background = 'green')
@@ -189,7 +187,7 @@ class FormularioOperacion:
         else:    
             self.SenBol.config(text = "TOMAR BOLETO ", font=('Arial', 15), background="green")
 
-            if BanLoop==1 and BanImpresion == 0:
+            if BanBoton == 1 and BanLoop==1:
                 print('imprimie boleto')
                 self.agregarRegistroRFID()
                 BanImpresion = 1
