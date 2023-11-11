@@ -21,9 +21,9 @@ import time
 import serial
 import RPi.GPIO as io           # Importa libreria de I/O (entradas / salidas)
 #Entrada
-loop = 16                      #gpio16,pin36,entrada loop                    
-boton = 12                     #gpio12,pin32,entrada boton
-SenBoleto = 20                 #gpio20,pin38,sensor boleto
+loop = 4                    #gpio16,pin36,entrada loop                    
+boton = 18                    #gpio12,pin32,entrada boton
+SenBoleto = 23                 #gpio20,pin38,sensor boleto
 
 #salidas
 barrera = 13                  #gpio13,pin33,Salida barrera
@@ -199,11 +199,11 @@ class FormularioOperacion:
                         #self.BotDet.config(text = "Imprimiendo",background="red")
                         BanBoton = 0
                         #self.agregarRegistroRFID()
-    io.add_event_detect(16, io.BOTH, callback = Intloop)
+    io.add_event_detect(4, io.BOTH, callback = Intloop)
  
-    io.add_event_detect(12, io.BOTH, callback = IntBoton)
+    io.add_event_detect(18, io.BOTH, callback = IntBoton)
     
-    io.add_event_detect(20, io.BOTH, callback = SenBoleto)
+    io.add_event_detect(23, io.BOTH, callback = SenBoleto)
 
 
     def check_inputs(self):
@@ -327,7 +327,8 @@ class FormularioOperacion:
         #reducida2.save("reducida2.png")
         print("horaentrada",horaentrada)
         print("imgqr",imgqr)
-        p = Usb(0x04b8, 0x0202, 0)#0202 04b8:0202
+        #p = Usb(0x04b8, 0x0202, 0)
+        p = Usb(0x04b8, 0x0e15, 0)
         #p = Usb(0x04b8, 0x0e28, 0)#esta es la impresora con sus valores que se obtienen con lsusb
         #p.set("center")
         #p.text("BOLETO DE ENTRADA\n")
@@ -570,7 +571,8 @@ class FormularioOperacion:
            self.label9.configure(text =(importe, "cobro"))
            self.PrTi.set("Per")
            self.Comprobante()
-           p = Usb(0x04b8, 0x0202, 0)
+           #p = Usb(0x04b8, 0x0202, 0)
+           p = Usb(0x04b8, 0x0e15, 0)
            #p = Usb(0x04b8, 0x0e28, 0)#esta es la impresora con sus valores que se obtienen con lsusb
            p.text('Boleto Perdido\n')
            FoliodelPerdido = str(self.PonerFOLIO.get(),)
@@ -841,7 +843,8 @@ class FormularioOperacion:
         io.output(out1,1)
 
     def Comprobante(self):
-        p = Usb(0x04b8, 0x0202, 0)
+        #p = Usb(0x04b8, 0x0202, 0)
+        p = Usb(0x04b8, 0x0e15, 0)
         #p = Usb(0x04b8, 0x0e28, 0)#esta es la impresora con sus valores que se obtienen con lsusb
         p.text("Comprobante de pago\n")
         p.image("LOGO1.jpg")
@@ -1176,7 +1179,8 @@ class FormularioOperacion:
         io.output(out1,1)
         respuesta=self.operacion1.desglose_cobrados(Numcorte)
         self.scrolledtxt2.delete("1.0", tk.END)
-        p = Usb(0x04b8, 0x0202, 0)
+        #p = Usb(0x04b8, 0x0202, 0)
+        p = Usb(0x04b8, 0x0e15, 0) 
         #p = Usb(0x04b8, 0x0e28, 0)#esta es la impresora con sus valores que se obtienen con lsusb
         p.text("El Numero de corte es "+Numcorte+'\n')
         for fila in respuesta:
@@ -1224,7 +1228,8 @@ class FormularioOperacion:
            self.label9.configure(text =(importe, "cobro"))
            self.PrTi.set("CDO")
            self.promo.set("")
-           p = Usb(0x04b8, 0x0202, 0)
+           #p = Usb(0x04b8, 0x0202, 0)
+           p = Usb(0x04b8, 0x0e15, 0) 
            #p = Usb(0x04b8, 0x0e28, 0)#esta es la impresora con sus valores que se obtienen con lsusb
            p.text('Boleto Cancelado\n')
            FoliodelCancelado = str(self.FolioCancelado.get(),)
@@ -1259,7 +1264,8 @@ class FormularioOperacion:
         #respuesta=str(respuesta)
         for fila in respuesta:
             self.scrolledtext1.insert(tk.END, "Entrada num: "+str(fila[0])+"\nEntro: "+str(fila[1])+"\nSalio: "+str(fila[2])+"\nImporte: "+str(fila[3])+"\n\n")
-            p = Usb(0x04b8, 0x0202, 0)
+            #p = Usb(0x04b8, 0x0202, 0)
+            p = Usb(0x04b8, 0x0e15, 0) 
             #p = Usb(0x04b8, 0x0e28, 0)#esta es la impresora con sus valores que se obtienen con lsusb
             p.text('Entrada Num :')
             p.text(str(fila[0]))
@@ -1330,7 +1336,8 @@ class FormularioOperacion:
         vobo = "cor"#este es para que la instruccion no marque error
         ActEntradas = (maxnum, vobo )
         self.label4.configure(text=("Numero de corte",maxnum))
-        p = Usb(0x04b8, 0x0202, 0)
+        #p = Usb(0x04b8, 0x0202, 0)
+        p = Usb(0x04b8, 0x0e15, 0) 
         #p = Usb(0x04b8, 0x0e28, 0)#esta es la impresora con sus valores que se obtienen con lsusb
         p.text("CORTE Num "+maxnum+"\n")
         p.text('IMPORTE: $ '+Im38+'\n')
