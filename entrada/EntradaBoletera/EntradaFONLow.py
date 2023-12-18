@@ -258,7 +258,7 @@ class FormularioOperacion:
         #p.set("center")
         #p.text("BOLETO DE ENTRADA\n")
         p.set("center")
-        p.image("LOGODIR4.jpg")
+        p.image("LOGO1.jpg")
         #p.set(font='b', height=4, align='right')
         p.set("center")
         p.text("\n")

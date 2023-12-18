@@ -470,7 +470,7 @@ class FormularioOperacion:
         f = open("reducida.png", "wb")
         img.save(f)
         f.close()
-        p.image("LOGODIR4.jpg")
+        p.image("LOGO1.jpg")
         #p.image("LOGO1.jpg")
         #Compro de comprobante
         p.set('left')
@@ -505,7 +505,7 @@ class FormularioOperacion:
         f = open("reducida.png", "wb")
         img.save(f)
         f.close()
-        p.image("LOGODIR4.jpg")
+        p.image("LOGO1.jpg")
         #Compro de comprobante
         p.set('left')
         ImporteCompro=str(self.importe.get(),)
