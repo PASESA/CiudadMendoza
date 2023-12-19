@@ -20,14 +20,7 @@ import xlsxwriter
 from PIL import ImageTk, Image
 import os
 import serial
-import RPi.GPIO as io
-#out1 = 17
-barrera = 17
-io.setmode(io.BCM)              # modo in/out pin del micro
-io.setwarnings(False)           # no señala advertencias de pin ya usados
-io.setup(barrera,io.OUT)           # configura en el micro las salidas
-io.output(barrera,1)
-TipoPromocion = 1
+
 class FormularioOperacion:
     def __init__(self):
         #creamos un objeto que esta en el archivo operacion dentro la clase Operacion
@@ -445,9 +438,7 @@ class FormularioOperacion:
         self.elcambioes.set(cambio)
         self.Comprobante()#manda a llamar el comprobante y lo imprime
         self.GuardarCobro()#manda a llamar guardar cobro para cobrarlo y guardar registro
-        io.output(barrera,0)
-        time.sleep(1)
-        io.output(barrera,1)
+
 
     def Comprobante(self):
         #p = Usb(0x04b8, 0x0202, 0) #04b8:0202
@@ -739,10 +730,8 @@ class FormularioOperacion:
                         self.entryNumTarjeta2.focus()
                         mb.showinfo("Pago de Pension",'Se registra SALIDA del auto')
                         #io.output(out3,1)#con un "1" se apaga el led
-                        io.output(barrera,0)#con un "0" abre la barrera
-                        time.sleep (1)
-                        io.output(barrera,1)
-           
+
+
 ###################### Fin de Pagina2 Inicio Pagina3 ###############################
     def listado_completo(self):
         self.pagina3 = ttk.Frame(self.cuaderno1)
@@ -1197,7 +1186,7 @@ class FormularioOperacion:
                     mb.showwarning("IMPORTANTE", "Distribucion debe ser un numero positivo mayor a cero")
                     return False
                 else :
-                    Libro = '/home/pi/Documents/Cobro/XlsCorte/Rpte Corte '+ str(mes)+'-'+str(Ano)+'  '+str(datetime.now().date())+'.xlsx' #+'/' '/home/pi/Documents/electrofloculacion/belen/Prueba/RPTCORTE.xlsx'
+                    Libro = './XlsCorte/Rpte Corte '+ str(mes)+'-'+str(Ano)+'  '+str(datetime.now().date())+'.xlsx'
                     datos=(mes, Ano)
                     #Obtenemos Fecha (Inicialy Final) del mes que solicita el reporte
                     CorteMaxMin=self.operacion1.Cortes_MaxMin(datos)
@@ -1221,7 +1210,7 @@ class FormularioOperacion:
                     worksheet = workbook.add_worksheet('CORTE')
                     #Definimos Encabezado Principal
                     #Obtenemos imagen del Encabezado
-                    worksheet.insert_image('A3', '/home/pi/Documents/Cobro/LOGO NEW.jpg') #,{'x_scale': 0.20, 'y_scale': 0.20} Insert de Logo (imagen.png)
+                    worksheet.insert_image('A3', 'LOGO_NEW.jpg') #,{'x_scale': 0.20, 'y_scale': 0.20} Insert de Logo (imagen.png)
                     #Definimos Formatos de celda del encabezado
                     cell_format0 = workbook.add_format()
                     cell_format0 = workbook.add_format({'bold': True,'align':'right'})
@@ -2443,4 +2432,4 @@ class FormularioOperacion:
         self.variable_tipo_pago_efectivo.set(False)
             
             
-# aplicacion1=FormularioOperacion()
+aplicacion1=FormularioOperacion()
