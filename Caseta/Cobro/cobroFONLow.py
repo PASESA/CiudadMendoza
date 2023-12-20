@@ -46,7 +46,7 @@ AutoA = "AutoA.png"
 
 qr_imagen = "reducida.png"
 PROMOCIONES = ('Promo1')
-nombre_estacionamiento = 'Ciudad Mendoza'
+nombre_estacionamiento = 'Hidalgo 401'
 
 estilo = ('Arial', 12)
 font_entrada = ('Arial', 20)
@@ -706,7 +706,6 @@ class FormularioOperacion:
         self.Comprobante(titulo='CONTRA', imagen_logo=False, QR_salida = True)
 
         self.limpiar_campos()
-        self.AbrirBarrera()
 
 
     def Comprobante(self, titulo: str = 'Comprobante de pago', imagen_logo: bool = True, QR_salida: bool = False) -> None:
@@ -765,7 +764,9 @@ class FormularioOperacion:
             printer.text('TIPO DE COBRO: ' + TarifaPreferente + '\n')
 
             if QR_salida:
-                self.DB.generar_QR(f"{Entrada}{Folio}")
+                qr =Entrada+Folio
+                # print(qr)
+                self.DB.generar_QR(qr)
                 # Imprimir el codigo QR de salida si está habilitado
                 printer.set(align="center")
                 printer.image(qr_imagen)
@@ -1160,17 +1161,17 @@ class FormularioOperacion:
         list_corte.append(txt)
         printer.set(align="left")
 
-        txt = "Cantidad - Tarifa - valor C/U - Total \n"
+        txt = "Cantidad - Tarifa - valor C/U - Total\n\n"
         printer.text(txt)
         list_corte.append(txt)
 
         for fila in respuesta:
-            txt = f"  {str(fila[0])}  -  {str(fila[1])}  -  ${str(fila[2])}   -  ${str(fila[3])}\n\n"
+            txt = f"  {str(fila[0])}  -  {str(fila[1])}  -  ${str(fila[2])}   -  ${str(fila[3])}\n"
             printer.text(txt)
             list_corte.append(txt)
 
         else:
-            txt = f"{BolCobrImpresion} Boletos        Suma total ${importe_corte}\n"
+            txt = f"\n{BolCobrImpresion} Boletos        Suma total ${importe_corte}\n"
             printer.text(txt)
             list_corte.append(txt)
 

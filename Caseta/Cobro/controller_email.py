@@ -14,16 +14,16 @@ from operacion import Operacion
 dir_cortes = "../Cortes"
 
 # Nombre del estacionamiento
-nombre_estacionamiento = 'Monterrey 75'
+nombre_estacionamiento = 'Hidalgo 401'
 
 # Datos de acceso a la cuenta de correo
-username = 'monterrey75@pasesa.com.mx'
-password = '#Monterrey75'
+username = 'hidalgo401@pasesa.com.mx'
+password = '@PuntoSantaRosa401'
 
 # Correos para enviar la informacion
-EMAIL_send_database = "sistemas@pasesa.com.mx"
-EMAIL_send_corte = "sistemas@pasesa.com.mx"
-EMAIL_notification = "sistemas@pasesa.com.mx"
+EMAIL_send_database = "enviocorreospasesa@outlook.com" #"sistemas@pasesa.com.mx"
+EMAIL_send_corte = "ingresos@pasesa.com.mx" #"sistemas@pasesa.com.mx"
+EMAIL_notification = "ingresos@pasesa.com.mx" #"sistemas@pasesa.com.mx"
 
 
 class ToolsEmail:
