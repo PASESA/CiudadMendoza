@@ -36,9 +36,9 @@ class Pines(Enum):
 
     (En caso de modificar un PIN tambien modificar su comentario)
     """
-    PIN_BARRERA:int = 13 # gpio17,pin11,Salida
+    PIN_BARRERA:int = 13 # gpio13,pin33,Salida
 
-    PIN_INDICADOR_BARRERA:int = 26 # gpio27,pin13,Salida
+    PIN_INDICADOR_BARRERA:int = 26 # gpio26,pin37,Salida
 
 class State(Enum):
     ON = 0
