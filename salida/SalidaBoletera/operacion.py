@@ -1,25 +1,17 @@
-#esto para el programa de p8 donde guardamos el tiempo transcurrido en una variable varchar
-
 import pymysql
-#import pymysql.connector
 
 class Operacion:
-
+    def __init__(self):
+        self.host = "169.254.70.94"
+        self.user = "Aurelio"
+        self.password = "RG980320"
+        self.database = "Parqueadero1"
     def abrir(self):
-        #conexion=mysql.connector.connect(host="localhost",
-         #                                     user="root",
-          #                                    passwd="RG980320",
-           #                                   database="Parqueadero1")
-#        conexion = pymysql.connect(host="localhost",
-#                        user="Aurelio",
-#                           passwd="RG980320",
-#                           database="Parqueadero1")
-        conexion = pymysql.connect(host="169.254.70.94",
-        #conexion = pymysql.connect(host="169.254.90.70",
-        
-                           user="Aurelio",
-                           passwd="RG980320",
-                           database="Parqueadero1") #host="192.168.1.150"                           
+        conexion=pymysql.connect(host=self.host,
+                                 user=self.user,
+                                 passwd=self.password,
+                                 database=self.database)
+
         return conexion
         
     def Intervalo(self):
@@ -266,6 +258,7 @@ class Operacion:
         cursor.execute(sql,datos)
         cone.close()
         return cursor.fetchall()
+
     def UpdPensionado(self, datos):
         cone=self.abrir()
         cursor=cone.cursor()
@@ -275,21 +268,23 @@ class Operacion:
         cursor.execute(sql, datos)
         cone.commit()
         cone.close()
+
     def MovsPensionado(self, datos):
         cone=self.abrir()
         cursor=cone.cursor()
         sql="INSERT INTO MovimientosPens(idcliente, num_tarjeta, Entrada, Estatus) values (%s,%s,%s,%s)"
         cursor.execute(sql,datos)
         cone.commit()
-        cone.close()    
+        cone.close()
+
     def UpdMovsPens(self, datos):
         cone=self.abrir()
         cursor=cone.cursor()
-        sql="UPDATE MovimientosPens SET Salida=%s, Estatus=%s WHERE idcliente=%s and Salida is null"
-        #sql = "update Entradas set CorteInc = %s, vobo = %s where TiempoTotal is not null and CorteInc=0;"
+        sql="UPDATE MovimientosPens SET Salida=%s, TiempoTotal =%s, Estatus=%s WHERE idcliente=%s and Salida is null"
         cursor.execute(sql, datos)
         cone.commit()
         cone.close()
+
     def UpdPens2(self, datos):
         cone=self.abrir()
         cursor=cone.cursor()
@@ -298,6 +293,7 @@ class Operacion:
         cursor.execute(sql, datos)
         cone.commit()
         cone.close()
+
     def ValidarTarj(self, datos):
         cone=self.abrir()
         cursor=cone.cursor()
@@ -305,4 +301,15 @@ class Operacion:
         cursor.execute(sql,datos)
         cone.close()
         return cursor.fetchall()
+
+    def consultar_UpdMovsPens(self, datos):
+        cone=self.abrir()
+        cursor=cone.cursor()
+        sql="SELECT	Entrada FROM MovimientosPens WHERE idcliente=%s and Salida is null"
+        #sql = "update Entradas set CorteInc = %s, vobo = %s where TiempoTotal is not null and CorteInc=0;"
+        cursor.execute(sql, datos)
+        cone.commit()
+        cone.close()
+        return cursor.fetchall()[0][0]
+
 
