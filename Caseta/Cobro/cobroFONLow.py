@@ -62,7 +62,7 @@ from controller_email import main
 
 show_clock = False
 send_data = False
-pantalla_completa = False
+pantalla_completa = True
 required_plate = False
 
 class FormularioOperacion:

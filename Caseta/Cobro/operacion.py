@@ -120,24 +120,6 @@ class Operacion:
         cone.close()
         return cursor.fetchall()
 
-    def EntradasSensor(self):
-        cone=self.abrir()
-        cursor=cone.cursor()
-        sql="select EntSens from AccesosSens where Folio=1"
-       #sql="select descripcion, precio from articulos where codigo=%s"
-        cursor.execute(sql)
-        cone.close()
-        return cursor.fetchall()
-
-    def SalidasSensor(self):
-        cone=self.abrir()
-        cursor=cone.cursor()
-        sql="select SalSens from AccesosSens where Folio=1"
-       #sql="select descripcion, precio from articulos where codigo=%s"
-        cursor.execute(sql)
-        cone.close()
-        return cursor.fetchall()
-
     def CuantosBoletosCobro(self):
         cone=self.abrir()
         cursor=cone.cursor()
