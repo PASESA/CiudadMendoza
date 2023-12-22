@@ -117,7 +117,7 @@ font_reloj = ('Arial', 65)
 
 font_etiquetas = ('Arial', 30, 'bold')
 
-fullscreen = False
+fullscreen = True
 
 
 class Entrada:

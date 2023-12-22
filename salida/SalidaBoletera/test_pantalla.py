@@ -62,7 +62,7 @@ nombre_salida = "Punto Santa Rosa"
 font_mensaje = ('Arial', 40)
 font_reloj = ('Arial', 65)
 
-fullscreen = False
+fullscreen = True
 
 
 class Entrada:
@@ -299,9 +299,6 @@ class Entrada:
         datos = (Salida, tiempo_total, 'Afuera', Existe)
         datos1 = ('Afuera', Existe)
 
-        Salida=datetime.today()
-        datos=(Salida, 'Afuera', Existe)
-        datos1=('Afuera', Existe)                       
         self.DB.UpdMovsPens(datos)
         self.DB.UpdPens2(datos1)
 
