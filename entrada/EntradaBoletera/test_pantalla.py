@@ -463,7 +463,7 @@ class Entrada:
         printer = Usb(0x04b8, 0x0e15, 0)
 
         # Imprimir la imagen del logo (comentado)
-        # printer.image(logo_1)
+        printer.image(logo_1)
         
         # Imprimir una línea de separación
         printer.text("--------------------------------------\n")
