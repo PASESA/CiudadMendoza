@@ -17,18 +17,20 @@ class System_Messages(Enum):
     Los miembros de esta enumeración representan mensajes comunes
     y tienen asociadas cadenas descriptivas.
     """
-    WITHOUT_ACCESS:str = "Sin regitro de entrada\n"
-    NOT_EXIST_PENSION:str = "No existe Pensionado\n"
-    DESACTIVATE_CARD:str = "Tarjeta desactivada\n"
-    PENSION_OUTSIDE:str = "El Pensionado ya salió\n"
+    PROCEED:str = "\nAvance\n"
+    WITHOUT_ACCESS:str = "\nSin registro de entrada\n"
+    NOT_EXIST_PENSION:str = "\nNo existe Pensionado\n"
+    DESACTIVATE_CARD:str = "\nTarjeta desactivada\n"
+    PENSION_OUTSIDE:str = "\nEl Pensionado ya salió\n"
 
-    NOT_EXIST_TICKET:str = "No existe un auto con dicho código\n"
-    NOT_PAY_TICKET:str = "Boleto sin pagar\nPase a estación de cobro"
-    RE_USED_TICKET:str = "Boleto ya usado\n"
+    NOT_EXIST_TICKET:str = "\nNo existe un auto con dicho código\n"
+    NOT_PAY_TICKET:str = "\nBoleto sin pagar\nPase a estación de cobro"
+    RE_USED_TICKET:str = "\nBoleto ya usado\n"
 
-    ERROR:str = "Ha ocurrido un error\n Lea nuevamente la tarjeta"
-    DEFAULT_TEXT:str = "Presente boleto\n"
-    NONE_MESAGE:str = "...\n"
+    ERROR:str = "\nHa ocurrido un error\n Lea nuevamente la tarjeta"
+    ERROR_QR:str = "Error al leer codigo QR\nAsegurese de haber leido el\ncomprobante de pago y no el boleto"
+    DEFAULT_TEXT:str = "\nPresente boleto\n"
+    NONE_MESAGE:str = "\n...\n"
 
 class Pines(Enum):
     """
@@ -141,7 +143,7 @@ class Entrada:
         frame_info.grid(column=0, row=2, padx=2, pady=2)
 
         # Label para mostrar el mensaje del sistema
-        self.label_informacion = tk.Label(frame_info, text=System_Messages.DEFAULT_TEXT.value, width=25, font=font_mensaje, justify='center') 
+        self.label_informacion = tk.Label(frame_info, text=System_Messages.DEFAULT_TEXT.value, width=27, font=font_mensaje, justify='center') 
         self.label_informacion.grid(column=0, row=0, padx=2, pady=2)
 
 
@@ -190,13 +192,17 @@ class Entrada:
             datos = self.variable_salida.get()
             print(datos)
 
+            if not datos:
+                self.show_message(System_Messages.DEFAULT_TEXT)
+                return
+
             if len(datos) == 10:
                 print("salida - pensionado")
                 self.salida_pensionados(self)
                 return
 
             elif len(datos) > 19:
-                folio = datos[19:]
+                folio = datos[16:]
                 print(folio)
 
                 respuesta=self.DB.consulta(folio)
@@ -226,6 +232,10 @@ class Entrada:
                 self.variable_salida.set("")
                 self.abrir_barrera()
 
+            else:
+                self.show_message(System_Messages.ERROR_QR)
+                self.variable_salida.set("")
+                return
 
         # Si ocurre una excepción
         except Exception as e:
@@ -297,6 +307,7 @@ class Entrada:
 
         self.abrir_barrera()
         self.variable_salida.set("")
+        self.entry_salida.focus()
 
 
     def abrir_barrera(self) -> None:
@@ -311,15 +322,16 @@ class Entrada:
         # Esperar un segundo
         sleep(1)
 
-        # # Apagar el indicador de barrera
-        # io.output(Pines.PIN_INDICADOR_BARRERA.value,State.OFF.value)
+        # Apagar el indicador de barrera
+        io.output(Pines.PIN_INDICADOR_BARRERA.value,State.OFF.value)
 
-        # # Abrir la barrera
-        # io.output(Pines.PIN_BARRERA.value, State.ON.value)
-        # # Esperar un segundo
-        # sleep(1)
-        # # Cerrar la barrera
-        # io.output(Pines.PIN_BARRERA.value, State.OFF.value)
+        # Abrir la barrera
+        io.output(Pines.PIN_BARRERA.value, State.ON.value)
+        # Esperar un segundo
+        sleep(1)
+
+        # Cerrar la barrera
+        io.output(Pines.PIN_BARRERA.value, State.OFF.value)
 
         # Imprimir el mensaje de que se abre la barrera en la consola
         print('------------------------------')
