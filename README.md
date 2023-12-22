@@ -14,7 +14,9 @@
 
 <pre><code>pip3 install -r requirements.txt</code></pre>
 
-<p>Si surge algún error durante la instalación, instala manualmente cada librería según las especificaciones del archivo <code>requirements.txt</code> y la versión compatible con tu sistema.</p>
+<p>Si surge algún error durante la instalación, instala manualmente cada librería según las especificaciones del archivo <code>requirements.txt</code> segun la versión indicada con el comando: </p>
+
+<pre><code>pip3 install nombre_libreria==version</code></pre>
 
 <h3 id="2-instalación-y-configuración-de-mariadb">2. Instalación y Configuración de MariaDB</h3>
 
