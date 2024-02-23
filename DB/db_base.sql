@@ -37,7 +37,7 @@ CREATE TABLE `Cortes` (
   `Quedados` int(11) DEFAULT NULL,
   `idInicial` int(11) DEFAULT NULL,
   `NumBolQued` int(11) DEFAULT NULL,
-  `Pensionados_Quedados` int(10) DEFAULT NULL,
+   `Pensionados_Quedados` INT(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -65,7 +65,7 @@ CREATE TABLE `Entradas` (
   `TarifaPreferente` varchar(255) DEFAULT NULL,
   `TipoPromocion` varchar(255) DEFAULT NULL,
   `QRpromo` varchar(25) DEFAULT NULL,
-  `Motivo` varchar(200) DEFAULT NULL,
+  `Motivo` VARCHAR(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -89,7 +89,7 @@ CREATE TABLE `MovimientosPens` (
   `Salida` datetime DEFAULT NULL,
   `TiempoTotal` varchar(255) DEFAULT NULL,
   `Estatus` varchar(15) DEFAULT NULL,
-  `Corte` int(10) DEFAULT NULL,
+  `Corte` INT(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
