@@ -22,7 +22,7 @@
 <p>Activa el entorno virtual. La forma de hacerlo varía según tu sistema operativo:</p>
 
 <ul>
-  <li>En sistemas basados en Unix o MacOS:</li>
+  <li>En sistemas basados en Linux o MacOS:</li>
   <pre><code>source .venv/bin/activate</code></pre>
 
 <li>En Windows:</li>
