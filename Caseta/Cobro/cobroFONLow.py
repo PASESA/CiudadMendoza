@@ -190,7 +190,7 @@ class FormularioOperacion:
             return
 
         MaxFolio=self.DB.MaxfolioEntrada()
-        folio_boleto = MaxFolio + 1
+        folio_boleto = int(MaxFolio) + 1
         self.MaxId.set(folio_boleto)
 
         folio_cifrado = self.DB.cifrar_folio(folio = folio_boleto)
@@ -546,6 +546,7 @@ class FormularioOperacion:
             self.entryfolio.focus()
             return
 
+        # folio = datos[26:]
         folio = self.DB.descifrar_folio(folio_cifrado = datos)
         self.folio.set(folio)
         folio = self.folio.get()
