@@ -1,4 +1,4 @@
-#programa de entrada en tenayuca 
+#programa de entrada en tenayuca
 from datetime import datetime, date, time, timedelta
 import random
 formato = "%H:%M:%S"
@@ -296,7 +296,7 @@ class FormularioOperacion:
     def agregarRegistroRFID(self):
         placa=self.Placa.get()
         
-        MaxFolio=self.operacion1.MaxfolioEntrada()
+        MaxFolio=self.operacion1.MaxfolioEntrada()[0][0]
         folio_boleto = int(MaxFolio) + 1
         self.MaxId.set(folio_boleto)
 
