@@ -1886,7 +1886,8 @@ class FormularioOperacion:
                 mb.showwarning("IMPORTANTE", "Distribucion debe ser un numero positivo mayor a cero")
                 return False
             else :
-                Libro = 'XlsCorte/Rpte Corte '+ str(mes)+'-'+str(Ano)+'  '+str(datetime.now().date())+'.xlsx'
+                Libro = './XlsCorte/Rpte Corte '+ str(mes)+'-'+str(Ano)+'  '+str(datetime.now().date())+'.xlsx'
+                
                 datos=(mes, Ano)
                 #Obtenemos Fecha (Inicialy Final) del mes que solicita el reporte
                 CorteMaxMin=self.DB.Cortes_MaxMin(datos)
@@ -3068,5 +3069,5 @@ class FormularioOperacion:
         pass
 
 
-aplicacion1=FormularioOperacion()
+# aplicacion1=FormularioOperacion()
 
