@@ -77,6 +77,9 @@ class ToolsEmail:
                         files.remove(file)
 
                 if rename:
+                    if len(files) == 0:
+                        return None
+
                     first_number = files[0][position_number:-4]
                     last_number = files[len(files)-1][position_number:-4]
 
@@ -301,6 +304,9 @@ def send_corte() -> str:
         password=password)
 
     zip_file = tools.compress_to_zip(source=dir_path, is_dir=True)
+
+    if zip_file is None:
+        return "Error: No se pudo enviar el corte\n"
 
     # Crear el asunto y mensaje del correo
     hora = datetime.now().strftime("%Y-%m-%d %H:%M:%S")

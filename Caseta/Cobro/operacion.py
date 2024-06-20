@@ -6,13 +6,13 @@ from tkinter import messagebox as mb
 class Operacion:
     def __init__(self):
         self.host = "localhost"
-        self.user = "Aurelio"
-        self.password = "RG980320"
-        self.database = "Parqueadero1"
+        self.user = "Admin"
+        self.password = "P4S3S4_ADMIN"
+        self.database = "db_pino_suarez_27"
 
     def abrir(self):
         conexion=pymysql.connect(host=self.host,
-                                 user=self.user,
+                                 user=self.user, 
                                  passwd=self.password,
                                  database=self.database)
 
