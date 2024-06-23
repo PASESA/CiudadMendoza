@@ -316,7 +316,7 @@ class FormularioOperacion:
 
         printer = Usb(0x04b8, 0x0e28, 0)
 
-        printer.image("LOGODIR4.jpg")
+        printer.image("LOGO1.jpg")
         printer.text("--------------------------------------\n")
         printer.set(align="center")
         printer.text("BOLETO DE ENTRADA\n")
@@ -825,7 +825,7 @@ class FormularioOperacion:
         #p = Usb(0x04b8, 0x0202, 0)
         p = Usb(0x04b8, 0x0e28, 0)#esta es la impresora con sus valores que se obtienen con lsusb
         p.text("Comprobante de pago\n")
-        p.image("LOGODIR4.jpg")
+        p.image("LOGO1.jpg")
         #Compro de comprobante
         ImporteCompro=str(self.importe.get(),)
         p.text("El importe es $"+ImporteCompro+"\n")
