@@ -296,7 +296,7 @@ class FormularioOperacion:
     def agregarRegistroRFID(self):
         placa=self.Placa.get()
         
-        MaxFolio=self.operacion1.MaxfolioEntrada()[0][0]
+        MaxFolio=self.operacion1.MaxfolioEntrada()
         folio_boleto = int(MaxFolio) + 1
         self.MaxId.set(folio_boleto)
 
