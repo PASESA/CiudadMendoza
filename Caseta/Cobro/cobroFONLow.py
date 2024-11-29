@@ -58,7 +58,7 @@ font_cancel = ('Arial', 15)
 button_color = "#062546"#"#39acec""#6264d4"
 button_letters_color = "white" 
 
-from controller_email import main
+
 
 show_clock = False
 send_data = True
@@ -728,8 +728,8 @@ class FormularioOperacion:
 
         self.GuardarCobro()
 
-        self.Comprobante()
-        self.Comprobante(titulo='CONTRA', imagen_logo=False, QR_salida = True)
+        self.Comprobante(QR_salida = True)
+        self.Comprobante(titulo='CONTRA', imagen_logo=False)
 
         self.limpiar_campos()
 
