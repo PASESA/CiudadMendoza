@@ -45,7 +45,7 @@ logo_1 = "LOGO1.jpg"
 AutoA = "AutoA.png"
 
 qr_imagen = "reducida.png"
-PROMOCIONES = ('Promo1')
+PROMOCIONES = ('BA BODEG')
 nombre_estacionamiento = 'Hidalgo 401'
 
 estilo = ('Arial', 12)
@@ -665,20 +665,24 @@ class FormularioOperacion:
         elif 46 <= self.minutos_dentro <= 59:
             cuarto_hora = 4
 
-        # Determina el importe base según las horas y cuartos de hora
-        if self.horas_dentro < 2 or (self.horas_dentro == 2 and cuarto_hora == 0):
-            importe = 5
-        else:
-            horas_completas = self.horas_dentro
-            if cuarto_hora > 0:
-                horas_completas += 1
-            
-            if horas_completas % 2 == 0:
-                horas_completas -= 1
+        # Configuración de costos
+        costo_hora = 10
+        costo_dia = costo_hora * 24
 
-            importe = 5 + ((horas_completas - 1) // 2) * 5
-            
-        importe = importe + (60 * self.dias_dentro)
+        # Cobro para las horas y fracciones adicionales
+        if self.horas_dentro == 0 and cuarto_hora > 0:
+            # Primera hora o fracción
+            importe += costo_hora
+        else:
+            # Sumar una hora adicional si hay fracción (minutos > 0)
+            horas_a_cobrar = self.horas_dentro + (1 if cuarto_hora > 0 else 0)
+            # Cobrar la primera hora de manera fija
+            importe += costo_hora  # Primera hora
+            if horas_a_cobrar > 1:
+                # Cobrar las horas adicionales
+                importe += (horas_a_cobrar - 1) * costo_hora
+
+        importe += (self.dias_dentro * costo_dia)
 
         # Establecer el importe y mostrarlo
         self.mostrar_importe(importe)
@@ -891,10 +895,53 @@ class FormularioOperacion:
         importe = int(self.importe.get())
 
         # Aplica diferentes descuentos según el tipo de promocion
-        if TipoPromo == "Promo1":
+        if TipoPromo == "BA BODEG":
             importe = 0
+            cuarto_hora = 0
 
-            text_promo = "Promo1"
+            # Determina el cuarto de hora
+            if self.minutos_dentro == 0:
+                cuarto_hora = 0
+            elif 1 <= self.minutos_dentro < 16:
+                cuarto_hora = 1
+            elif 16 <= self.minutos_dentro < 31:
+                cuarto_hora = 2
+            elif 31 <= self.minutos_dentro < 46:
+                cuarto_hora = 3
+            elif 46 <= self.minutos_dentro <= 59:
+                cuarto_hora = 4
+
+            # Configuración de costos
+            costo_hora = 10
+            costo_dia = costo_hora * 24
+
+
+            # Cobro para las horas y fracciones adicionales
+            if self.horas_dentro <= 2:
+                # Primera hora o fracción
+                importe = 5
+                
+                if self.horas_dentro == 2 and cuarto_hora >= 0:
+                    # Sumar una hora adicional si hay fracción (minutos > 0)
+                    horas_a_cobrar = self.horas_dentro + (1 if cuarto_hora > 0 else 0)
+                    # Cobrar la primera hora de manera fija
+                    importe += costo_hora  # Primera hora
+                    if horas_a_cobrar > 1:
+                        # Cobrar las horas adicionales
+                        importe += ((horas_a_cobrar - 1) * costo_hora) - 15
+
+            else:
+                # Sumar una hora adicional si hay fracción (minutos > 0)
+                horas_a_cobrar = self.horas_dentro + (1 if cuarto_hora > 0 else 0)
+                # Cobrar la primera hora de manera fija
+                importe += costo_hora  # Primera hora
+                if horas_a_cobrar > 1:
+                    # Cobrar las horas adicionales
+                    importe += ((horas_a_cobrar - 1) * costo_hora) - 15
+
+            importe += (self.dias_dentro * costo_dia)
+
+            text_promo = "BodegaAu"
 
 
         # Añade "Danado" a la descripcion de la promocion si el boleto está marcado como "Danado"
@@ -3028,5 +3075,5 @@ class FormularioOperacion:
         pass
 
 
-# aplicacion1=FormularioOperacion()
+aplicacion1=FormularioOperacion()
 
