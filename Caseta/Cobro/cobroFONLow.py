@@ -45,7 +45,7 @@ logo_1 = "LOGO1.jpg"
 AutoA = "AutoA.png"
 
 qr_imagen = "reducida.png"
-PROMOCIONES = ('BA BODEG')
+PROMOCIONES = ('BA BODEG', 'ba bodeg')
 nombre_estacionamiento = 'Hidalgo 401'
 
 estilo = ('Arial', 12)
