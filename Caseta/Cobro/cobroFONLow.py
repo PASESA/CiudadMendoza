@@ -895,7 +895,7 @@ class FormularioOperacion:
         importe = int(self.importe.get())
 
         # Aplica diferentes descuentos según el tipo de promocion
-        if TipoPromo == "BA BODEG":
+        if TipoPromo == "BA BODEG" or "ba bodeg":
             importe = 0
             cuarto_hora = 0
 
