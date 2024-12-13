@@ -61,8 +61,8 @@ button_letters_color = "white"
 from controller_email import main
 
 show_clock = False
-send_data = False
-pantalla_completa = False
+send_data = True
+pantalla_completa = True
 required_plate = False
 
 class FormularioOperacion:
@@ -934,7 +934,7 @@ class FormularioOperacion:
                 cuarto_hora = 4
 
             # Configuración de costos
-            costo_hora = 0
+            costo_hora = 10
             costo_dia = costo_hora * 24
 
             # Cobro para las horas y fracciones adicionales
@@ -3108,5 +3108,5 @@ class FormularioOperacion:
         pass
 
 
-aplicacion1=FormularioOperacion()
+# aplicacion1=FormularioOperacion()
 
